@@ -1,0 +1,22 @@
+{
+  "name": "properlytest",
+  "version": "1.0.0",
+  "description": "A small application",
+  "main": "index.js",
+  "scripts": {
+    "test": "index.html test"
+  },
+  "author": "Sichun Yin",
+  "license": "ISC",
+  "dependencies": {
+    "requirejs-plugins": "^1.0.2",
+    "sql": "^0.78.0",
+    "sql.js": "^0.5.0",
+    "sqlite3": "^4.0.2",
+    "text": "github:requirejs/text"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/VictorSichun/ProperlyTest.git"
+  }
+}
