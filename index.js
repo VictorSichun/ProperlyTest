@@ -49,7 +49,7 @@ function loadUsersByLocations(users){
                 if(nRequest[i].status === 200){
                     var jsonResult = JSON.parse(nRequest[i].responseText).results[0];
                     if(jsonResult == null){
-                        document.getElementById("response1").innerHTML = "<p>Nothing bad, probably exceeded the query limits</p>";
+                        document.getElementById("response1").innerHTML = "<p>Some info lost here, probably because of query limits exceeded</p>";
                         return false;
                     }
                     jsonResult = jsonResult.address_components;
@@ -59,7 +59,7 @@ function loadUsersByLocations(users){
                             userCityMapping[users[i].id] = location;
                             var locationElement = document.getElementById(location);
                             if (locationElement == null){
-                                document.getElementById("response1").innerHTML += "<li id='1'>"+ location + ": " + users[i].name +"</li>";
+                                document.getElementById("locations").innerHTML += "<li id='1'>"+ location + ": " + users[i].name +"</li>";
                                 document.getElementById("1").setAttribute("id", location);
                             }else{
                                 document.getElementById(location).textContent += "<p>"+ users[i].name +"</p>";
@@ -80,14 +80,14 @@ document.getElementById("response1").innerHTML += "</ul>";
 }
 
 function loadUsersByCompanies(users){
-    document.getElementById("response1").innerHTML += "<ul id='companies'>";
+    document.getElementById("response2").innerHTML += "<ul id='companies'>";
     for(let i=0;i<users.length;i++){
         let firstPos = users[i].email.indexOf("@");
         let secondPos = users[i].email.lastIndexOf(".");
         let company = users[i].email.substring(firstPos+1, secondPos);
         let companyElement = document.getElementById(company);
         if(companyElement == null){
-            document.getElementById("response2").innerHTML += "<li id='1'>"+ company + ": " + users[i].name +"</li>";
+            document.getElementById("companies").innerHTML += "<li id='1'>"+ company + ": " + users[i].name +"</li>";
             document.getElementById("1").setAttribute("id", company);
         }else{
             document.getElementById(company).textContent += "<p>"+ users[i].name +"</p>";
@@ -165,12 +165,15 @@ function loadUsersByPremium(dataset){
 function loadUsersAgainstPros(dataset){
     const properties = dataset['properties'];
     const users = dataset['users'];
-    document.getElementById("response5").innerHTML += "<ul id='different'>";
+    document.getElementById("response5").innerHTML += "<ul id='difference1'>";
     let idsReferred = {};
     const googleApiKey = "AIzaSyBfNiTdn47CHng5HHro-hQCU1m6CvnCm6U";
     const numOfProperties = properties.length;
     let nRequest = {}
     for (var i=0; i<numOfProperties; i++){
+        if(idsReferred[properties[i].userId] == true){
+            continue;
+        }
     (function(i) {
             var latlng = properties[i].location;
             var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ latlng +"\
@@ -193,7 +196,7 @@ function loadUsersAgainstPros(dataset){
                                     for (var k=0; k<users.length; k++){
                                         if(users[k].id == properties[i].userId && (idsReferred[properties[i].userId] != true)){
                                             idsReferred[properties[i].userId] = true;
-                                            document.getElementById("response5").innerHTML += "<li>" + users[k].name + "</li>";
+                                            document.getElementById("difference1").innerHTML += "<li>" + users[k].name + "</li>";
                                         }
                                     }
                                 }
@@ -210,3 +213,92 @@ function loadUsersAgainstPros(dataset){
     document.getElementById("response5").innerHTML += "</ul>"
 }
 
+function loadTaskTwo(){
+    loadBookingsOne(dataset['bookings']);
+    loadBookingsTwo(dataset['bookings']);
+}
+
+function loadBookingsOne(bookings){
+    document.getElementById("response6").innerHTML += "<ul id='difference2'>";
+    let currentBook;
+    let startDate;
+    let endDate;
+    let timeDiff;
+    let diffDays;
+    for(var i=0; i<bookings.length; i++){
+        currentBook = bookings[i];
+        startDate = new Date(currentBook.startDate);
+        endDate = new Date(currentBook.endDate);
+        timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+        diffDays = Math.floor(timeDiff / (1000 * 3600 * 24)); 
+        if (diffDays >= 25){
+            document.getElementById("difference2").innerHTML += "<li> Booking ID: " + currentBook.id + "  Property ID: " 
+            + currentBook.propertyId + "</li>";
+        }
+    }
+    document.getElementById("response6").innerHTML += "</ul>";
+}
+
+function loadBookingsTwo(bookings){
+    document.getElementById("response7").innerHTML += "<ul id='difference3'>";
+    let currentBook;
+    let startDate;
+    let endDate;
+    let timeDiff;
+    let diffDays;
+    for(var i=0; i<bookings.length; i++){
+        currentBook = bookings[i];
+        startDate = new Date(currentBook.startDate);
+        endDate = new Date(currentBook.endDate);
+        timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+        diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        if (diffDays <= 3){
+            document.getElementById("difference3").innerHTML += "<li> Booking ID: " + currentBook.id + "  Property ID: " 
+            + currentBook.propertyId + "</li>";
+        }
+    }
+    document.getElementById("response7").innerHTML += "</ul>";
+
+}
+function loadTaskTwoOne(){
+    userDate(dataset);
+}
+
+function userDate(dataset){
+    let propertyBookingMapping = {};
+    let startDate = document.getElementById("startDate").value;
+    let endDate = document.getElementById("endDate").value;
+    if (startDate == ""|| endDate == ""){
+        document.getElementById("responsex").textContent = "Please enter valid dates!";
+        return false;
+    }
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+    if(endDate.getTime() < startDate.getTime()){
+        document.getElementById("responsex").textContent = "End date cannot earlier than start date!";
+        return false;
+    }
+    document.getElementById("responsex").innerHTML = "<table id='dates'><tr><th>Booking ID</th><th>Booking Date</th>"+
+        "<th>Required Date</th><th>Timezone</th></tr>"
+    const bookings = dataset["bookings"];
+    const properties = dataset["properties"];
+    for(var i=0; i<bookings.length; i++){
+        let currentBookStart = new Date(bookings[i].startDate);
+        let currentBookEnd = new Date(bookings[i].endDate);
+        if (startDate.getTime() >= currentBookStart.getTime() && endDate.getTime() <= currentBookEnd.getTime()){
+            let timezone;
+            for(var j=0; j<properties.length; j++){
+                if(properties[j].id == bookings[i].propertyId){
+                    timezone = properties[j].timeZone;
+                }
+            }
+            let content1 = "<tr><td>" + bookings[i].id + "</td>";
+            let content2 = "<td> From: " + currentBookStart.toLocaleString('en-GB', { timeZone: timezone}) + " To: " + currentBookEnd.toLocaleString('en-GB', { timeZone: timezone}) + "</td>";
+            let content3 = "<td> From: " + startDate.toLocaleString('en-GB', { timeZone: timezone}) + " To: " + endDate.toLocaleString('en-GB', { timeZone: timezone}) + "</td>";
+            let content4 = "<td>" + timezone + "</td></tr>";
+            document.getElementById("dates").innerHTML += content1 + content2 + content3 + content4;
+            
+        }
+    }
+    document.getElementById("responsex").innerTHML += "</table>";
+}
