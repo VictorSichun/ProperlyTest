@@ -25,9 +25,9 @@ function loadObjects(){
 
 function loadTaskOne(){
     loadUsersByLocations(dataset['users']);
-    //loadUsersByCompanies(dataset['users']);
-    //loadUsersByFree(dataset);
-    //loadUsersByPremium(dataset);
+    loadUsersByCompanies(dataset['users']);
+    loadUsersByFree(dataset);
+    loadUsersByPremium(dataset);
     loadUsersAgainstPros(dataset);
 }
 
