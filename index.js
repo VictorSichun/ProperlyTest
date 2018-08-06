@@ -185,7 +185,7 @@ function loadUsersAgainstPros(dataset){
                     if(nRequest[i].status === 200){
                         var jsonResult = JSON.parse(nRequest[i].responseText).results[0];
                         if(jsonResult == null){
-                            document.getElementById("response5").innerHTML += "<p>Nothing bad, probably exceeded the query limits</p>";
+                            document.getElementById("response5").innerHTML = "<p>Nothing bad, probably exceeded the query limits</p>";
                             return false;
                         }
                         jsonResult = jsonResult.address_components;
