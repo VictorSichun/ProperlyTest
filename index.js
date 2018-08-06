@@ -5,7 +5,6 @@ let dataset = {};
 let userCityMapping = {};
 
 function loadObjects(){
-    
     $.getJSON(jsonFiles['users'], function(data){
         dataset['users'] = data;
     });
@@ -24,7 +23,7 @@ function loadObjects(){
 }
 
 function loadTaskOne(){
-    loadUsersByLocations(dataset['users']);
+    var loadTaskOne1 = loadUsersByLocations(dataset['users']);
     loadUsersByCompanies(dataset['users']);
     loadUsersByFree(dataset);
     loadUsersByPremium(dataset);
@@ -32,6 +31,9 @@ function loadTaskOne(){
 }
 
 function loadUsersByLocations(users){
+    if (document.getElementById("response2").innerHTML != ""){
+        return false;
+    }
     const googleApiKey = "AIzaSyBfNiTdn47CHng5HHro-hQCU1m6CvnCm6U";
     let nRequest = {};
     const numOfusers = users.length;
@@ -80,6 +82,9 @@ document.getElementById("response1").innerHTML += "</ul>";
 }
 
 function loadUsersByCompanies(users){
+    if (document.getElementById("response2").innerHTML != ""){
+        return false;
+    }
     document.getElementById("response2").innerHTML += "<ul id='companies'>";
     for(let i=0;i<users.length;i++){
         let firstPos = users[i].email.indexOf("@");
@@ -97,6 +102,9 @@ function loadUsersByCompanies(users){
 }
 
 function loadUsersByFree(dataset){
+    if (document.getElementById("response3").innerHTML != ""){
+        return false;
+    }
     const users = dataset['users'];
     const properties = dataset['properties'];
     const subscriptions = dataset['subscriptions'];
@@ -131,6 +139,9 @@ function loadUsersByFree(dataset){
 }
 
 function loadUsersByPremium(dataset){
+    if (document.getElementById("response4").innerHTML != ""){
+        return false;
+    }
     const users = dataset['users'];
     const properties = dataset['properties'];
     const subscriptions = dataset['subscriptions'];
@@ -163,6 +174,9 @@ function loadUsersByPremium(dataset){
 }
 
 function loadUsersAgainstPros(dataset){
+    if (document.getElementById("response5").innerHTML != ""){
+        return false;
+    }
     const properties = dataset['properties'];
     const users = dataset['users'];
     document.getElementById("response5").innerHTML += "<ul id='difference1'>";
@@ -219,6 +233,9 @@ function loadTaskTwo(){
 }
 
 function loadBookingsOne(bookings){
+    if (document.getElementById("response6").innerHTML != ""){
+        return false;
+    }
     document.getElementById("response6").innerHTML += "<ul id='difference2'>";
     let currentBook;
     let startDate;
@@ -240,6 +257,9 @@ function loadBookingsOne(bookings){
 }
 
 function loadBookingsTwo(bookings){
+    if (document.getElementById("response7").innerHTML != ""){
+        return false;
+    }
     document.getElementById("response7").innerHTML += "<ul id='difference3'>";
     let currentBook;
     let startDate;
@@ -304,6 +324,9 @@ function userDate(dataset){
 }
 
 function loadTaskThree(){
+    if (document.getElementById("response8").innerHTML != ""){
+        return false;
+    }
     document.getElementById("response8").innerHTML = 
     "<p>1. Every time when a user registering a new property, check if the property location is within the same city as the user lived in, if true go step 2;<br/>"+
     "2. Check if the user is using premium subscription. If yes, permit the registration; if no, go step 3;<br/>"+
