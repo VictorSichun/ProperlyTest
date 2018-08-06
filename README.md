@@ -1,91 +1,39 @@
-# Properly Coding Challenge
-Code challenge for full stack developers.
-
-## Objectives
- - Assess software development skills such as:
-    - Problem solving
-    - Software quality
-    - Code quality
-    - Task Sizing and Work Estimation
-    - Use of Tools (e.g. Git)
-    - Delivery
-
-## Format
- - Assigment to be developed at the candidate's own time/estimates. There is a limit as to how long this should take and we also measure against that.
-    - The candidate will estimate the task
-    - Develop
-    - Upload the code to a public github repository
-    - Demo the delivery and present the delivery during the technical interview
-    - Pair programming during the technical interview. 2 additional requirements will be added and should be developed during a pair programming session (20 to 45 mins max).
-
-## Problem Statement
-
-Given a **Database** of:
-### Users
- - name
- - email
- - location
- - subscriptionId
-
-### Subscriptions
- - id
- - name
- - priceType
-
-### Properties
- - id
- - userId
- - title
- - location
- - type
- - numberOfRooms
- - timeZone
-
-### Bookings
-
- - id
- - propertyId
- - startDate
- - endDate
-
-USe the **JSON dataset** that we have provided in the repository. 
-
-#### Task Group 1
-create functions that return:
- - All users from a particular city
-
- - All users from a particular company (a user of a company is a user that has the same email domain. E.g for john@getproperly.com and company@getproperly.com "getproperly.com" is the email domain)
-
- - All users from Free tier subscription which have more than 6 properties
-
- - All users from Premium tier subscription which have less than 4 properties
-
- - All users that live in a different city than their properties
-
-#### Task Group 2
-create a function that return:
- - All bookings for a **given period** (start and end dates).
-    - The bookings returned should have the startDate and endDate formated to dd/MM/YYYY HH:mm using the property timeZone. 
-    - The **given period** is also provided in the Property timeZone.
-
-- All bookings longer or equal to 25 days.
-
-- All bookings shorter or equal to 3 days.
-
-- All Properties with Bookings with 1 day or less between bookings
-
- - With the functions created expose them in a restful application and create a dashboard (simple UI) to display the results
-
-#### Task Group 3
-
- - How to limit the users that live in a different city to just use premium subscription?
-
-
-## FAQ
-1 -  Where can I find the city for Property and User?
-Use the GPS location provided.
-
-
-
-npm install sql.js
-npm install sqlite3
+# Properly code chanllenge
+A report contains specifications of tasks I've done
+## Requirements
+* jQuery
+* Python
+## Installations
+* Clone the repo:
+```
+git clone https://github.com/VictorSichun/ProperlyTest
+```
+* change directory to the repo:
+```
+cd ProperlyTest
+```
+## Usage
+* Run a localhost by:
+```
+Python3 -m http.server
+```
+* Open a modern browser and type in:
+```
+http://localhost:8000/
+```
+(port 8000 is the port http.server normally used)
+## Report
+First of all, apologize to the late submission because of a miscalculation of the time, plus some overly complex methods implemented. But still I've learned a lot from those mistakes.:)
+### Languages
+I used mostly pure Html/CSS/JavaScript to establish the application. Because JavaScript is the one of languages I'm familiar with the most and it is easy to implement visualization along with Html/CSS.
+### About the tasks
+The thoughts of the tasks were pretty simple:
+1. Read through README.md file and had a picture of how the application will be looked like in my mind;
+2. Fully understood the requirements of each task and started coding;
+3. Did simple tests after each small step and thought the business logic behind the scene critically;
+4. Learned a lot from each material I've gone through during the development;
+### Problems
+1. Querying to dataset without any SQL was really a pain. So I've tried to establish a database for the given json files, but I failed to load the database with pure JavaScript;
+2. Querying multiple asynchronous HttpRequests without paying money was really a pain as well. I implemented reverse geocoding supported by google api for the first task, but everyday there are limited queries available, which would make the application run into fail;
+### Summary
+It's my pleasure to take this code chanllenge. No matter I would be selected or not, I've learned a lot, many thanks!
