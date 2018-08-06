@@ -49,7 +49,7 @@ function loadUsersByLocations(users){
                 if(nRequest[i].status === 200){
                     var jsonResult = JSON.parse(nRequest[i].responseText).results[0];
                     if(jsonResult == null){
-                        document.getElementById("response1").innerHTML = "<p>Some info lost here, probably because of query limits exceeded</p>";
+                        document.getElementById("response1").innerHTML = "Some info lost here, probably because of query limits exceeded";
                         return false;
                     }
                     jsonResult = jsonResult.address_components;
@@ -62,7 +62,7 @@ function loadUsersByLocations(users){
                                 document.getElementById("locations").innerHTML += "<li id='1'>"+ location + ": " + users[i].name +"</li>";
                                 document.getElementById("1").setAttribute("id", location);
                             }else{
-                                document.getElementById(location).textContent += "<p>"+ users[i].name +"</p>";
+                                document.getElementById(location).textContent += "  "+ users[i].name;
                             }
                         }
                     }
@@ -300,5 +300,13 @@ function userDate(dataset){
             
         }
     }
-    document.getElementById("responsex").innerTHML += "</table>";
+    document.getElementById("responsex").innerHTML += "</table>";
+}
+
+function loadTaskThree(){
+    document.getElementById("response8").innerHTML = 
+    "<p>1. Every time when a user registering a new property, check if the property location is within the same city as the user lived in, if true go step 2;<br/>"+
+    "2. Check if the user is using premium subscription. If yes, permit the registration; if no, go step 3;<br/>"+
+    "3. Deny the request and ask the user to activate premium subscription;</p>";
+
 }
