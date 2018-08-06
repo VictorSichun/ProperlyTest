@@ -2,7 +2,7 @@
 A report contains specifications of tasks I've done
 ## Requirements
 * jQuery
-* Python
+* Python3
 ## Installations
 * Clone the repo:
 ```
